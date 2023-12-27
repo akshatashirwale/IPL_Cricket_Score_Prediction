@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>First Innings Score Predictor</title>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Convergence&family=Lato:wght@300;400;700;900&family=Mukta:wght@300;400;600;700;800&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='ipl-favicon.ico') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+        <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+
+    <body class="demo">
+
+        <!-- Website Title -->
+    	<div class="container">
+            <span class='container-heading'>Indian Premier League (IPL)</span>
+    	</div>
+
+        <!-- Prediction Area -->
+        <div class="prediction-area">
+
+            <!-- IPL Banner - 1 -->
+            <div class='ipl-banner-left' id="ipl-left">
+
+                <div class="slider-frame">
+                    <div class="slide-images-up" id="u-slide">
+
+                        <!-- Image-1 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='mi.png') }}" alt="Mumbai Indians">
+                        </div>
+                        <!-- Image-2 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='srh.png') }}" alt="Sunrisers Hyderabad">
+                        </div>
+                        <!-- Image-3 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='rcb.png') }}" alt="Royal Challengers Bangalore">
+                        </div>
+                        <!-- Image-4 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='dc.png') }}" alt="Delhi Capitals">
+                        </div>
+                        <!-- Image-5 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='rr.png') }}" alt="Rajasthan Royals">
+                        </div>
+                        <!-- Image-6 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='kkr.png') }}" alt="Kolkata Knight Riders">
+                        </div>
+                        <!-- Image-7 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='kxip.png') }}" alt="Punjab Kings">
+                        </div>
+                        <!-- Image-8 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='csk.png') }}" alt="Chennai Super Kings">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class='ipl-banner-left d-none' id="ban-left">
+                <div class="slider-frame">
+                    <!-- Image-1 -->
+                    <div class="image-container">
+                        <img class="image-width" src="../static/mi.png" alt="Mumbai Indians" id="bat-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Form -->
+            <div class='div2'>
+                <form action="{{ url_for('predict') }}" method="POST">
+                    <!-- Batting Team Dropdown -->
+                    <select class="form-input align-center" name="batting-team" id="bat" required/>
+                        <option value="" class="text-center">--- Select a Batting team ---</option>
+                        <option value="Mumbai Indians">Mumbai Indians</option>
+                        <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                        <option value="Chennai Super Kings">Chennai Super Kings</option>
+                        <option value="Rajasthan Royals">Rajasthan Royals</option>
+                        <option value="Punjab Kings">Punjab Kings</option>
+                        <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                        <option value="Delhi Capitals">Delhi Capitals</option>
+                        <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                    </select><br>
+                    <!-- Bowling Team Dropdown -->
+                    <select class="form-input align-center" name="bowling-team" id="ball" required/>
+                        <option value="">--- Select a Bowling team ---</option>
+                        <option value="Mumbai Indians">Mumbai Indians</option>
+                        <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                        <option value="Chennai Super Kings">Chennai Super Kings</option>
+                        <option value="Rajasthan Royals">Rajasthan Royals</option>
+                        <option value="Punjab Kings">Punjab Kings</option>
+                        <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                        <option value="Delhi Capitals">Delhi Capitals</option>
+                        <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                    </select><br>
+                    <input class="form-input" type="number" id="overs" name="overs" placeholder="Overs (>= 5.0) (< 19.4) (eg: 7.2)" min="5.0" max="19.3" step="0.1" required/><br>
+                    <input class="form-input" type="number" id="runs" name="runs" placeholder="Runs (eg: 64)" min="0" required/><br>
+                    <input class="form-input" type="number" id="wickets" name="wickets" placeholder="Wickets (eg: 4)" min="0" max="9" required/><br>
+                    <input class="form-input" type="number" id="run5" name="runs_in_prev_5" placeholder="Runs scored in previous 5 Overs (eg: 42)" min="0" required/><br>
+                    <input class="form-input" type="number" id="wik5" name="wickets_in_prev_5" placeholder="Wickets taken in previous 5 Overs (eg: 3)" min="0" max="9" required/><br>
+
+                <input type="submit" class="myButton" value="Predict Score">
+            </form>
+            </div>
+
+            <!-- IPL Banner - 2 -->
+            <div class='ipl-banner-right' id="ipl-right">
+
+                <div class="slider-frame">
+                    <div class="slide-images-down" id="d-slide">
+
+                        <!-- Image-1 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='mi.png') }}" alt="Mumbai Indians">
+                        </div>
+                        <!-- Image-2 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='srh.png') }}" alt="Sunrisers Hyderabad">
+                        </div>
+                        <!-- Image-3 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='rcb.png') }}" alt="Royal Challengers Bangalore">
+                        </div>
+                        <!-- Image-4 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='dc.png') }}" alt="Delhi Capitals">
+                        </div>
+                        <!-- Image-5 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='kkr.png') }}" alt="Kolkata Knight Riders">
+                        </div>
+                        <!-- Image-6 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='rr.png') }}" alt="Rajasthan Royals">
+                        </div>
+                        <!-- Image-7 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='kxip.png') }}" alt="Punjab Kings">
+                        </div>
+                        <!-- Image-8 -->
+                        <div class="image-container">
+                            <img class="image-width" src="{{ url_for('static', filename='csk.png') }}" alt="Chennai Super Kings">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class='ipl-banner-right d-none' id="ban-right">
+                <div class="slider-frame">
+                    <!-- Image-1 -->
+                    <div class="image-container">
+                        <img class="image-width" src="../static/mi.png" alt="Mumbai Indians" id="ball-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+       <!-- <div class='footer'>
+           <p class='footer-description'>
+                Made by :<br>
+                &emsp; Vatsal Sanghal &emsp; Kaushik Bhide &emsp; Pratik More &emsp; Tejas Kale
+           </p>
+       </div> -->
+    </body>
+    <script>
+        img_map = {}
+        img_map['Mumbai Indians'] = 'mi.png'
+        img_map['Kolkata Knight Riders'] = 'kkr.png'
+        img_map['Chennai Super Kings'] = 'csk.png'
+        img_map['Rajasthan Royals'] = 'rr.png'
+        img_map['Punjab Kings'] = 'kxip.png'
+        img_map['Royal Challengers Bangalore'] = 'rcb.png'
+        img_map['Delhi Capitals'] = 'dc.png'
+        img_map['Sunrisers Hyderabad'] = 'srh.png'
+
+        $('#bat').bind('input', function() {
+            
+            if(this.value == ""){
+                $('#ipl-left').removeClass('d-none')
+                $('#ban-left').addClass('d-none')
+                if($('#ball').val() == "") {
+                    function fun() {
+                        $('#d-slide').addClass('slide-images-down')
+                    }
+                    setTimeout(fun, 10);
+                    $('#d-slide').removeClass('slide-images-down')
+                }
+            }
+            else{
+                var url = '../static/'
+                url+=img_map[this.value]
+                $('#bat-img').attr("src", url);
+                $('#ban-left').removeClass('d-none')
+                $('#ipl-left').addClass('d-none')
+            }
+            if(this.value == $('#ball').val())
+                this.setCustomValidity('Bowling and Batting teams should not be same');
+            else
+                this.setCustomValidity('');
+            
+        });
+        $('#ball').bind('input', function() {
+            if(this.value == ""){
+                $('#ipl-right').removeClass('d-none')
+                $('#ban-right').addClass('d-none')
+                if($('#bat').val() == "") {
+                    function fun() {
+                        $('#u-slide').addClass('slide-images-up')
+                    }
+                    setTimeout(fun, 10);
+                    $('#u-slide').removeClass('slide-images-up')
+                }
+            }
+            else{
+                var url = '../static/'
+                url+=img_map[this.value]
+                $('#ball-img').attr("src", url);
+                $('#ban-right').removeClass('d-none')
+                $('#ipl-right').addClass('d-none')
+            }
+            if(this.value == $('#bat').val())
+                this.setCustomValidity('Bowling and Batting teams should not be same');
+            else
+                this.setCustomValidity('');
+        });
+        $('#overs').bind('input', function() {
+            if(parseFloat(this.value)-parseInt(this.value)>0.5)
+                this.setCustomValidity('Decimal value should be less than 0.6');
+            else
+                this.setCustomValidity('');
+        });
+        $('#run5').bind('input', function() {
+            if(parseInt(this.value)>parseInt($('#runs').val()))
+                this.setCustomValidity('Value should not be greater than runs');
+            else
+                this.setCustomValidity('');
+        });
+        $('#wik5').bind('input', function() {
+            if(parseInt(this.value)>parseInt($('#wickets').val()))
+                this.setCustomValidity('Value should not be greater than wickets');
+            else
+                this.setCustomValidity('');
+        });
+    </script>
+</html>

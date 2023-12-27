@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>First Innings Score Predictor</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='ipl-favicon.ico') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+        <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+
+    <body class="demo">
+
+        <!-- Website Title -->
+        <div class="container">
+            <span class='container-heading'>Indian Premier League (IPL)</span>
+        </div>
+
+        <!-- Prediction Area -->
+        <div class="prediction-area">
+
+            <!-- IPL Banner - 1 -->
+            <div class='ipl-banner-left' id="ban-left">
+                <div class="slider-frame">
+                    <!-- Image-1 -->
+                    <div class="image-container">
+                        <img class="image-width" src="" alt="Mumbai Indians" id="bat-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div class="results">
+                <p class='result-p'>The final predicted score (range) <br><b>{{ lower_limit }}</b> to <b>{{ upper_limit }}</b></p>
+                <br>
+                <button class="myButton" onclick="Back()" style="font-size: 20px;">Reset</button>
+            </div>
+
+            <!-- IPL Banner - 2 -->
+            <div class='ipl-banner-right' id="ban-right">
+                <div class="slider-frame">
+                    <!-- Image-1 -->
+                    <div class="image-container">
+                        <img class="image-width" src="" alt="Mumbai Indians" id="ball-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+       <!-- <div class='footer'>
+           <p class='footer-description'>
+                Made by :<br>
+                &emsp; Vatsal Sanghal &emsp; Kaushik Bhide &emsp; Pratik More &emsp; Tejas Kale
+           </p>
+       </div> -->
+    </body>
+    <script>
+        function Back(){
+            var url = window.location.href
+            array=url.split('/')
+            array.pop()
+            url=array.join('/')
+            window.location.replace(url)
+        }
+
+        img_map = {}
+        img_map['Mumbai Indians'] = 'mi.png'
+        img_map['Kolkata Knight Riders'] = 'kkr.png'
+        img_map['Chennai Super Kings'] = 'csk.png'
+        img_map['Rajasthan Royals'] = 'rr.png'
+        img_map['Punjab Kings'] = 'kxip.png'
+        img_map['Royal Challengers Bangalore'] = 'rcb.png'
+        img_map['Delhi Capitals'] = 'dc.png'
+        img_map['Sunrisers Hyderabad'] = 'srh.png'
+                
+        var url1 = '../static/'+img_map['{{bat}}']
+        $('#bat-img').attr("src", url1);
+        var url2 = '../static/'+img_map['{{ball}}']
+        $('#ball-img').attr("src", url2);
+    
+
+    </script>
+</html>
